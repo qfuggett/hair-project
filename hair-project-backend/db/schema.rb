@@ -16,7 +16,9 @@ ActiveRecord::Schema.define(version: 2021_01_07_204020) do
   enable_extension "plpgsql"
 
   create_table "ingredients", force: :cascade do |t|
+    t.string "name"
     t.string "description"
+    t.integer "product_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
