@@ -5,7 +5,6 @@ class CreateReadings < ActiveRecord::Migration[6.0]
       t.string :description
       t.string :upright
       t.string :reversed
-      t.integer :user_id
 
       t.timestamps
     end
