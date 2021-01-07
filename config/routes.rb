@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :spreads
   resources :users do
     resources :readings
   end
