@@ -1,3 +1,4 @@
 class ReadingSerializer < ActiveModel::Serializer
-    attributes :id, description
+    attributes :id, :name, :description, :upright, :reversed
+    belongs_to :user
 end
