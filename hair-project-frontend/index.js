@@ -1,7 +1,9 @@
 const BASE_URL = "http://localhost:3000"
 
 window.addEventListener("DOMContentLoaded", () => {
-    gotProducts()
+    // document.getElementById('product-form').addEventListener('click', displayCreateForm)
+    document.getElementById('products').addEventListener('click', getProducts)
+    getProducts()
 })
 
 //index view
@@ -32,4 +34,15 @@ function clicksToLinks(){
 
 function displayProduct(p){
     console.log(p.target)
+    let id = p.target.dataset.id
+    let main = document.getElementById('main')
+    main.innerHTML = ""
+    fetch(BASE_URL + `/products/${id}`)
+    .then(resp => resp.json())
+    .then(todo => {
+        main.innerHTML = `
+        <h3>${todo.name}</h3>
+        `
+        // product.ingredients.forEach
+    })
 }
