@@ -92,11 +92,13 @@ function displayProduct(e){
     .then(resp => resp.json())
     .then(product => {
         main.innerHTML = `
-        <h3>${product.name}</h3>
-        <ul>
-
-        </ul>
+        <h3>${product.name}</h3> 
+        <hr>
+        <br>
+        <button id="delete-product" data-id="${product.id}">Delete</button>
         `
+        document.getElementById('delete-product', removeProduct)
+
         product.ingredients.forEach(ingredient => {     
             const li = document.createElement('li')
             li.innerHTML = ingredient.name
@@ -105,6 +107,9 @@ function displayProduct(e){
     })
 }
 
+function removeProduct(){
+    
+}
 
 function getIngredients() {          
     let main = document.getElementById('main')
