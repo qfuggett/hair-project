@@ -28,8 +28,32 @@ function clearForm(){
 
 function createProduct(e){
     e.preventDefault()
+    let main = document.getElementById('main')
+    let product = {
+        name: e.target.querySelector("#name").value
+    }
 
-    console.log(e)
+    let configObj = {
+        method: 'POST',
+        body: JSON.stringify(product),
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    }
+
+    fetch(BASE_URL + '/products', configObj)
+    .then(res => res.json())
+    .then(product => {
+        main.innerHTML += `
+        <ul>
+            <a href="#" data-id="${product.id}">${product.name}</a>
+        <ul>
+        `
+        clicksToLinks()
+        clearForm()
+        }
+    )
 }
 
 
@@ -74,9 +98,9 @@ function displayProduct(e){
         </ul>
         `
         product.ingredients.forEach(ingredient => {     
-            const h4 = document.createElement('h4')
-            h4.innerHTML = ingredient.name
-            main.appendChild(h4)
+            const li = document.createElement('li')
+            li.innerHTML = ingredient.name
+            main.appendChild(li)
         })
     })
 }
