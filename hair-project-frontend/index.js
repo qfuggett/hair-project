@@ -3,6 +3,8 @@ const BASE_URL = "http://localhost:3000"
 window.addEventListener("DOMContentLoaded", () => {
     document.getElementById('show-product-form').addEventListener('click', displayCreateForm)
     document.getElementById('products').addEventListener('click', getProducts)
+    document.getElementById('ingredients').addEventListener('click', getIngredients)
+
     getProducts()
 })
 
@@ -31,19 +33,19 @@ function createProduct(e){
 }
 
 
-//index view
-function getProducts() {            //index
+
+function getProducts() {          
     let main = document.getElementById('main')
     main.innerHTML = ""
-    fetch(BASE_URL + '/products')   //sends request to return a promise(backend to retrieve products)
-    .then(res => res.json())        //accesses the response and returns it in json format
-    .then(products => {             // promise is resolved and displayed  to the DOM
+    fetch(BASE_URL + '/products')   
+    .then(res => res.json())        
+    .then(products => {             
         products.map(product => {
         console.log(products)
         main.innerHTML += `
-        <li>
-            <a href="a" data-id="${product.id}">${product.name}</a>
-        </li>
+        <ul>
+            <a href="#" data-id="${product.id}">${product.name}</a>
+        <ul>
         `
         })
         clicksToLinks()
@@ -51,29 +53,79 @@ function getProducts() {            //index
 }
 
 function clicksToLinks(){
-    const products = document.querySelectorAll("li a")
+    const products = document.querySelectorAll("ul a")
     products.forEach(product => {
         product.addEventListener('click', displayProduct)
     })
 }
 
-function displayProduct(p){         //show route
-    console.log(p.target)
-    let id = p.target.dataset.id
+function displayProduct(e){         
+    console.log(e.target)
+    let id = e.target.dataset.id
     let main = document.getElementById('main')
     main.innerHTML = ""
     fetch(BASE_URL + `/products/${id}`)         
     .then(resp => resp.json())
-    .then(todo => {
+    .then(product => {
         main.innerHTML = `
         <h3>${product.name}</h3>
-        
-        <a href="a" data-id="${product.id}">${product.name}</a>
-        ${ingredient.name}
+        <ul>
+
+        </ul>
         `
         product.ingredients.forEach(ingredient => {     
-            console.log(ingredient.name);
+            const h4 = document.createElement('h4')
+            h4.innerHTML = ingredient.name
+            main.appendChild(h4)
         })
+    })
+}
+
+
+function getIngredients() {          
+    let main = document.getElementById('main')
+    main.innerHTML = ""
+    fetch(BASE_URL + '/ingredients')   
+    .then(res => res.json())        
+    .then(ingredients => {             
+        ingredients.map(ingredient => {
+        console.log(ingredients)
+        main.innerHTML += `
+        <li>
+            <a href="#" data-id="${ingredient.id}">${ingredient.name}</a>
+        </li>
+        `
+        })
+        ingredientsClicksToLinks()
+    })
+}
+
+function ingredientsClicksToLinks(){
+    const products = document.querySelectorAll("li a")
+    products.forEach(product => {
+        product.addEventListener('click', displayIngredients)
+    })
+}
+
+function displayIngredients(e){        
+    console.log(e.target)
+    let id = e.target.dataset.id
+    let main = document.getElementById('main')
+    main.innerHTML = ""
+    fetch(BASE_URL + `/ingredients/${id}`)         
+    .then(resp => resp.json())
+    .then(ingredient => {
+        main.innerHTML = `
+        <h3>Here's a list of all the ingredients you've logged so far!</h3>
+
+        <h4>${ingredient.name}</h4>
+        <ul>
+        <li>${ingredient.description}
+
+        `
+        // product.ingredients.forEach(ingredient => {     
+        //     console.log(ingredient.name);
+        // })
     })
 }
 
