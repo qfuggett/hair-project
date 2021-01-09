@@ -97,7 +97,7 @@ function displayProduct(e){
         <br>
         <button id="delete-product" data-id="${product.id}">Delete</button>
         `
-        document.getElementById('delete-product', removeProduct)
+        document.getElementById('delete-product').addEventListener(`click`, removeProduct)
 
         product.ingredients.forEach(ingredient => {     
             const li = document.createElement('li')
@@ -107,8 +107,19 @@ function displayProduct(e){
     })
 }
 
-function removeProduct(){
-    
+function removeProduct(event){
+    let configObj = {
+        method: `DELETE`, 
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    }
+    fetch(BASE_URL + `/products/${event.target.dataset.id}`, configObj)
+    .then(() => {
+        getProducts()}
+        )
+
 }
 
 function getIngredients() {          
