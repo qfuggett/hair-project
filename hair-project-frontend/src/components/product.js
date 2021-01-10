@@ -2,8 +2,13 @@ class Product {
     constructor(data){
         this.id = data.id
         this.name = data.name
-        this.ingredients = data.ingredients
+        // this.ingredients = this.ingredients.map(ingredient => {
+        //     return ingredient.name
+        // })
+        this.ingredients = console.log(this.ingredients)
+        
     }
+
 
     render() {
         return `
@@ -18,13 +23,14 @@ class Product {
             <h3>${this.name}</h3> 
             <hr>
             <br>
+            ${this.ingredients}
             <button id="delete-product" data-id="${this.id}">Delete</button>
             `
-
-            this.ingredients.forEach(ingredient => {     
-                const li = document.createElement('li')
-                li.innerHTML = ingredient.name
-                main.appendChild(li)
-            })
+        
     }
 }
+// this.ingredients.forEach(ingredient => {     
+//     const li = document.createElement('li')
+//     li.innerHTML = ingredient.name
+//     main.appendChild(li)
+// }

@@ -39,6 +39,8 @@ function displayCreateForm(){
         <form>
             <label>Name</label>
             <input type="text" id="name">
+            <input type="text" id="ingredientName">
+            <input type="text" id="ingredientDescription">
             <input type="submit">
         </form>
     `
@@ -55,7 +57,9 @@ async function createProduct(e){
     e.preventDefault()
     let main = document.getElementById('main')
     let product = {
-        name: e.target.querySelector("#name").value
+        name: e.target.querySelector("#name").value,
+        ingredientName: e.target.querySelector("#ingredientName").value,
+        ingredientDescription: e.target.querySelector("#ingredientDescription").value
     }
 
     let data = await apiService.fetchCreateProduct(product)
