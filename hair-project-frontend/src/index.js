@@ -18,7 +18,7 @@ const init = () => {
 
 function bindEventListeners() {
     document.getElementById('show-product-form').addEventListener('click', displayCreateForm)
-    document.getElementById('products').addEventListener('click', getProducts)
+    document.getElementById('products').addEventListener('click', renderProducts)
     document.getElementById('ingredients').addEventListener('click', getIngredients)
 }
 
