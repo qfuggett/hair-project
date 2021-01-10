@@ -1,12 +1,36 @@
-const BASE_URL = "http://localhost:3000"
+// const BASE_URL = "http://localhost:3000"
 
-window.addEventListener("DOMContentLoaded", () => {
+// window.addEventListener("DOMContentLoaded", () => {
+//     document.getElementById('show-product-form').addEventListener('click', displayCreateForm)
+//     document.getElementById('products').addEventListener('click', getProducts)
+//     document.getElementById('ingredients').addEventListener('click', getIngredients)
+
+//     getProducts()
+// })
+
+const apiService = new ApiService()
+let main = document.getElementById('main')
+
+const init = () => {
+    bindEventListeners()
+    renderProducts()
+}
+
+function bindEventListeners() {
     document.getElementById('show-product-form').addEventListener('click', displayCreateForm)
     document.getElementById('products').addEventListener('click', getProducts)
     document.getElementById('ingredients').addEventListener('click', getIngredients)
+}
 
-    getProducts()
-})
+
+async function renderProducts() {
+    const products = await apiService.fetchProducts()
+    main.innerHTML = ""
+    products.map(product => {
+        const newProduct = new Product(product)
+        main.innerHTML += newProduct.render()
+    })
+}
 
 function displayCreateForm(){
     let formDiv = document.querySelector("#product-form")
@@ -56,25 +80,6 @@ function createProduct(e){
     )
 }
 
-
-
-function getProducts() {          
-    let main = document.getElementById('main')
-    main.innerHTML = ""
-    fetch(BASE_URL + '/products')   
-    .then(res => res.json())        
-    .then(products => {             
-        products.map(product => {
-        console.log(products)
-        main.innerHTML += `
-        <ul>
-            <a href="#" data-id="${product.id}">${product.name}</a>
-        <ul>
-        `
-        })
-        clicksToLinks()
-    })
-}
 
 function clicksToLinks(){
     const products = document.querySelectorAll("ul a")
@@ -169,3 +174,4 @@ function displayIngredients(e){
     })
 }
 
+init()
