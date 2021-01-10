@@ -83,18 +83,12 @@ async function displayProduct(e){
 
 }
 
-function removeProduct(event){
-    let configObj = {
-        method: `DELETE`, 
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    }
-    fetch(BASE_URL + `/products/${event.target.dataset.id}`, configObj)
-    .then(() => {
-        getProducts()}
-        )
+async function removeProduct(event){
+    let id = event.target.dataset.id
+    const data = await apiService.fetchRemoveProduct(id)
+     .then(data => {
+         renderProducts()
+     })
 
 }
 

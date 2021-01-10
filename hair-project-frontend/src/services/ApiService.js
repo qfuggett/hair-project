@@ -24,9 +24,22 @@ class ApiService {
                 'Accept': 'application/json'
             }
         }
-        
+
         let res = await fetch(this.baseURL + `/products`, configObj)
         let data = await res.json()
         return data
     }
+
+    async fetchRemoveProduct(id) {
+        let configObj = {
+            method: `DELETE`, 
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        }
+
+        let res = await fetch(this.baseURL + `/products/${id}`, configObj)
+    }
+
 }
