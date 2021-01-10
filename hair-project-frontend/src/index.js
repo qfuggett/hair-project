@@ -19,7 +19,7 @@ const init = () => {
 function bindEventListeners() {
     document.getElementById('show-product-form').addEventListener('click', displayCreateForm)
     document.getElementById('products').addEventListener('click', renderProducts)
-    document.getElementById('ingredients').addEventListener('click', getIngredients)
+    document.getElementById('ingredients').addEventListener('click', renderIngredients)
 }
 
 
@@ -80,7 +80,6 @@ async function displayProduct(e){
     const product = new Product(data)
     main.innerHTML = product.renderProduct()
     document.getElementById('delete-product').addEventListener(`click`, removeProduct)
-
 }
 
 async function removeProduct(event){
@@ -92,23 +91,33 @@ async function removeProduct(event){
 
 }
 
-function getIngredients() {          
-    let main = document.getElementById('main')
+async function renderIngredients() {
+    const ingredients = await apiService.fetchIngredients()
     main.innerHTML = ""
-    fetch(BASE_URL + '/ingredients')   
-    .then(res => res.json())        
-    .then(ingredients => {             
-        ingredients.map(ingredient => {
-        console.log(ingredients)
-        main.innerHTML += `
-        <li>
-            <a href="#" data-id="${ingredient.id}">${ingredient.name}</a>
-        </li>
-        `
-        })
-        ingredientsClicksToLinks()
+    ingredients.map(ingredient => {
+        const newIngredient = new Ingredient(ingredient)
+        main.innerHTML += newIngredient.render()
     })
+    ingredientsClicksToLinks()
 }
+
+// function getIngredients() {          
+//     let main = document.getElementById('main')
+//     main.innerHTML = ""
+//     fetch(BASE_URL + '/ingredients')   
+//     .then(res => res.json())        
+//     .then(ingredients => {             
+//         ingredients.map(ingredient => {
+//         console.log(ingredients)
+//         main.innerHTML += `
+//         <li>
+//             <a href="#" data-id="${ingredient.id}">${ingredient.name}</a>
+//         </li>
+//         `
+//         })
+//         ingredientsClicksToLinks()
+//     })
+// }
 
 function ingredientsClicksToLinks(){
     const products = document.querySelectorAll("li a")
@@ -117,26 +126,34 @@ function ingredientsClicksToLinks(){
     })
 }
 
-function displayIngredients(e){        
+async function displayIngredients(e){         
     console.log(e.target)
     let id = e.target.dataset.id
-    let main = document.getElementById('main')
-    main.innerHTML = ""
-    fetch(BASE_URL + `/ingredients/${id}`)         
-    .then(resp => resp.json())
-    .then(ingredient => {
-        main.innerHTML = `
-        <h3>Here's a list of all the ingredients you've logged so far!</h3>
-
-        <h4>${ingredient.name}</h4>
-        <ul>
-        <li>${ingredient.description}
-
-        `
-        // product.ingredients.forEach(ingredient => {     
-        //     console.log(ingredient.name);
-        // })
-    })
+    const data = await apiService.fetchIngredient(id)
+    const ingredient = new Ingredient(data)
+    main.innerHTML = ingredient.renderIngredient()
 }
+
+// function displayIngredients(e){        
+//     console.log(e.target)
+//     let id = e.target.dataset.id
+//     let main = document.getElementById('main')
+//     main.innerHTML = ""
+//     fetch(BASE_URL + `/ingredients/${id}`)         
+//     .then(resp => resp.json())
+//     .then(ingredient => {
+//         main.innerHTML = `
+//         <h3>Here's a list of all the ingredients you've logged so far!</h3>
+
+//         <h4>${ingredient.name}</h4>
+//         <ul>
+//         <li>${ingredient.description}
+
+//         `
+//         // product.ingredients.forEach(ingredient => {     
+//         //     console.log(ingredient.name);
+//         // })
+//     })
+// }
 
 init()
