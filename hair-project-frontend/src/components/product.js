@@ -2,11 +2,9 @@ class Product {
     constructor(data){
         this.id = data.id
         this.name = data.name
-        // this.ingredients = this.ingredients.map(ingredient => {
-        //     return ingredient.name
-        // })
-        this.ingredients = console.log(this.ingredients)
-        
+        this.ingredients = data.ingredients.map(ingredient => {
+            return ingredient.name
+        })        
     }
 
 

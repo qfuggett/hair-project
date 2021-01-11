@@ -24,6 +24,7 @@ function bindEventListeners() {
 
 
 async function renderProducts() {
+    clearForm()
     const products = await apiService.fetchProducts()
     main.innerHTML = ""
     products.map(product => {
@@ -39,14 +40,20 @@ function displayCreateForm(){
         <form>
             <label>Name</label>
             <input type="text" id="name">
-            <input type="text" id="ingredientName">
-            <input type="text" id="ingredientDescription">
             <input type="submit">
         </form>
     `
     formDiv.innerHTML = html
     document.querySelector("form").addEventListener(`submit`, createProduct)
 }
+
+{/* <form>
+            <label>Name</label>
+            <input type="text" id="name">
+            <input type="text" id="ingredientName">
+            <input type="text" id="description">
+            <input type="submit">
+        </form> */}
 
 function clearForm(){
     let formDiv = document.querySelector("#product-form")
@@ -58,12 +65,10 @@ async function createProduct(e){
     let main = document.getElementById('main')
     let product = {
         name: e.target.querySelector("#name").value,
-        ingredientName: e.target.querySelector("#ingredientName").value,
-        ingredientDescription: e.target.querySelector("#ingredientDescription").value
     }
 
     let data = await apiService.fetchCreateProduct(product)
-    let newProduct = new Product(product)
+    let newProduct = new Product(data)
     main.innerHTML += newProduct.render()
     clicksToLinks()
     clearForm()
@@ -77,7 +82,8 @@ function clicksToLinks(){
     })
 }
 
-async function displayProduct(e){         
+async function displayProduct(e){   
+    clearForm()      
     console.log(e.target)
     let id = e.target.dataset.id
     const data = await apiService.fetchProduct(id)
@@ -96,6 +102,7 @@ async function removeProduct(event){
 }
 
 async function renderIngredients() {
+    clearForm()
     const ingredients = await apiService.fetchIngredients()
     main.innerHTML = ""
     ingredients.map(ingredient => {
@@ -131,6 +138,7 @@ function ingredientsClicksToLinks(){
 }
 
 async function displayIngredients(e){         
+    clearForm()
     console.log(e.target)
     let id = e.target.dataset.id
     const data = await apiService.fetchIngredient(id)
