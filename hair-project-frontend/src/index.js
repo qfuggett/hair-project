@@ -61,7 +61,7 @@ async function createProduct(e){
 
 
 function clicksToLinks(){
-    const products = document.querySelectorAll("ul a")
+    const products = document.querySelectorAll(".product-id")
     products.forEach(product => {
         product.addEventListener('click', displayProduct)
     })
@@ -74,7 +74,8 @@ async function displayProduct(e){
     const data = await apiService.fetchProduct(id)
     const product = new Product(data)
     main.innerHTML = product.renderProduct()
-    document.getElementById('create-ingredient').addEventListener(`click`, displayCreateIngredientForm)
+    document.querySelector(".product-ingredient").addEventListener(`click`, displayIngredient)
+    document.querySelectorAll("p button").addEventListener(`click`, displayCreateIngredientForm)
     document.getElementById('delete-product').addEventListener(`click`, removeProduct)
 }
 
