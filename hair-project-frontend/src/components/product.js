@@ -19,12 +19,14 @@ class Product {
     renderProduct() {
         return `
             <h3>${this.name}</h3> 
-            <hr>
             <br>
+            <button id="create-ingredient" data-id="${this.ingredients}">Add An Ingredient</button>
+            <hr>
+            <p>
             ${this.ingredients}
-            <button id="delete-product" data-id="${this.id}">Delete</button>
+            <p>
+            <button id="delete-product" data-id="${this.id}">Remove this Product</button>
             `
-        
     }
 }
 // this.ingredients.forEach(ingredient => {     

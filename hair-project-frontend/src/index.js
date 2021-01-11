@@ -1,13 +1,3 @@
-// const BASE_URL = "http://localhost:3000"
-
-// window.addEventListener("DOMContentLoaded", () => {
-//     document.getElementById('show-product-form').addEventListener('click', displayCreateForm)
-//     document.getElementById('products').addEventListener('click', getProducts)
-//     document.getElementById('ingredients').addEventListener('click', getIngredients)
-
-//     getProducts()
-// })
-
 const apiService = new ApiService()
 let main = document.getElementById('main')
 
@@ -26,7 +16,7 @@ function bindEventListeners() {
 async function renderProducts() {
     clearForm()
     const products = await apiService.fetchProducts()
-    main.innerHTML = ""
+    main.innerHTML = "<h3>Products You've Created:"
     products.map(product => {
         const newProduct = new Product(product)
         main.innerHTML += newProduct.render()
@@ -38,22 +28,17 @@ function displayCreateForm(){
     let formDiv = document.querySelector("#product-form")
     let html = `
         <form>
+            <h3>Create A New Product: </h3>
             <label>Name</label>
             <input type="text" id="name">
             <input type="submit">
+            <hr>
+            <br>
         </form>
     `
     formDiv.innerHTML = html
     document.querySelector("form").addEventListener(`submit`, createProduct)
 }
-
-{/* <form>
-            <label>Name</label>
-            <input type="text" id="name">
-            <input type="text" id="ingredientName">
-            <input type="text" id="description">
-            <input type="submit">
-        </form> */}
 
 function clearForm(){
     let formDiv = document.querySelector("#product-form")
@@ -89,6 +74,7 @@ async function displayProduct(e){
     const data = await apiService.fetchProduct(id)
     const product = new Product(data)
     main.innerHTML = product.renderProduct()
+    document.getElementById('create-ingredient').addEventListener(`click`, displayCreateIngredientForm)
     document.getElementById('delete-product').addEventListener(`click`, removeProduct)
 }
 
@@ -104,7 +90,7 @@ async function removeProduct(event){
 async function renderIngredients() {
     clearForm()
     const ingredients = await apiService.fetchIngredients()
-    main.innerHTML = ""
+    main.innerHTML = "<h3>All Ingredients In Database:</h3>"
     ingredients.map(ingredient => {
         const newIngredient = new Ingredient(ingredient)
         main.innerHTML += newIngredient.render()
@@ -112,32 +98,15 @@ async function renderIngredients() {
     ingredientsClicksToLinks()
 }
 
-// function getIngredients() {          
-//     let main = document.getElementById('main')
-//     main.innerHTML = ""
-//     fetch(BASE_URL + '/ingredients')   
-//     .then(res => res.json())        
-//     .then(ingredients => {             
-//         ingredients.map(ingredient => {
-//         console.log(ingredients)
-//         main.innerHTML += `
-//         <li>
-//             <a href="#" data-id="${ingredient.id}">${ingredient.name}</a>
-//         </li>
-//         `
-//         })
-//         ingredientsClicksToLinks()
-//     })
-// }
 
 function ingredientsClicksToLinks(){
     const products = document.querySelectorAll("li a")
     products.forEach(product => {
-        product.addEventListener('click', displayIngredients)
+        product.addEventListener('click', displayIngredient)
     })
 }
 
-async function displayIngredients(e){         
+async function displayIngredient(e){         
     clearForm()
     console.log(e.target)
     let id = e.target.dataset.id
@@ -146,26 +115,36 @@ async function displayIngredients(e){
     main.innerHTML = ingredient.renderIngredient()
 }
 
-// function displayIngredients(e){        
-//     console.log(e.target)
-//     let id = e.target.dataset.id
-//     let main = document.getElementById('main')
-//     main.innerHTML = ""
-//     fetch(BASE_URL + `/ingredients/${id}`)         
-//     .then(resp => resp.json())
-//     .then(ingredient => {
-//         main.innerHTML = `
-//         <h3>Here's a list of all the ingredients you've logged so far!</h3>
+async function createIngredient(e){
+    e.preventDefault()
+    let main = document.getElementById('main')
+    let ingredient = {
+        name: e.target.querySelector("#name").value,
+        description: e.target.querySelector("#description").value,
+    }
 
-//         <h4>${ingredient.name}</h4>
-//         <ul>
-//         <li>${ingredient.description}
+    let data = await apiService.fetchCreateIngredient(ingredient)
+    let newIngredient = new Ingredient(data)
+    main.innerHTML += newIngredient.render()
+    ingredientsClicksToLinks()
+    clearForm()
+}
 
-//         `
-//         // product.ingredients.forEach(ingredient => {     
-//         //     console.log(ingredient.name);
-//         // })
-//     })
-// }
+function displayCreateIngredientForm(){
+    let formDiv = document.querySelector("#product-form")
+    let html = `
+        <form>
+            <h3>Add An Ingredient: </h3>
+            <label>Name</label>
+            <input type="text" id="name"><br/>
+            <label>Description</label>
+            <input type="text" id="description"><br/>
+            <input type="hidden" id="product_id" name="product_id" value="product_id">
+            <input type="submit">
+        </form>
+    `
+    formDiv.innerHTML = html
+    document.querySelector("form").addEventListener(`submit`, createIngredient)
+}
 
 init()

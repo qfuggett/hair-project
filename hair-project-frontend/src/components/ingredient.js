@@ -15,12 +15,8 @@ class Ingredient {
 
     renderIngredient() {
         return `
-            <h3>Here's a list of all the ingredients you've logged so far!</h3>
-
             <h4>${this.name}</h4>
             <li>${this.description}</li>
-
         `
     }
-
 }

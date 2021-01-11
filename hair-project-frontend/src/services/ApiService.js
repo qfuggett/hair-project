@@ -42,6 +42,22 @@ class ApiService {
         let res = await fetch(this.baseURL + `/products/${id}`, configObj)
     }
 
+    async fetchCreateIngredient(ingredientData){
+        let configObj = {
+            method: 'POST',
+            body: JSON.stringify(ingredientData),
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        }
+        let id = ingredientData.id
+        binding.pry
+        let res = await fetch(this.baseURL + `/products/${id}/ingredients`, configObj)
+        let data = await res.json()
+        return data
+    }
+
     async fetchIngredients(){
         let res = await fetch(this.baseURL + '/ingredients')
         let data = await res.json()
