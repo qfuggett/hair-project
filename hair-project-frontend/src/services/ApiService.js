@@ -51,9 +51,8 @@ class ApiService {
                 'Accept': 'application/json'
             }
         }
-        let id = ingredientData.id
-        binding.pry
-        let res = await fetch(this.baseURL + `/products/${id}/ingredients`, configObj)
+        let product_id = ingredientData.product_id
+        let res = await fetch(this.baseURL + `/products/${product_id}/ingredients`, configObj)
         let data = await res.json()
         return data
     }

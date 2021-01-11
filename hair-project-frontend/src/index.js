@@ -121,6 +121,7 @@ async function createIngredient(e){
     let ingredient = {
         name: e.target.querySelector("#name").value,
         description: e.target.querySelector("#description").value,
+        product_id: e.target.querySelector("#product_id").value
     }
 
     let data = await apiService.fetchCreateIngredient(ingredient)
@@ -132,6 +133,7 @@ async function createIngredient(e){
 
 function displayCreateIngredientForm(){
     let formDiv = document.querySelector("#product-form")
+    let productId = document.querySelector("#create-ingredient").dataset.id
     let html = `
         <form>
             <h3>Add An Ingredient: </h3>
@@ -139,7 +141,7 @@ function displayCreateIngredientForm(){
             <input type="text" id="name"><br/>
             <label>Description</label>
             <input type="text" id="description"><br/>
-            <input type="hidden" id="product_id" name="product_id" value="product_id">
+            <input type="hidden" id="product_id" name="product_id" value="${productId}">
             <input type="submit">
         </form>
     `

@@ -2,9 +2,7 @@ class Product {
     constructor(data){
         this.id = data.id
         this.name = data.name
-        this.ingredients = data.ingredients.map(ingredient => {
-            return ingredient.name
-        })        
+        this.ingredients = data.ingredients        
     }
 
 
@@ -17,20 +15,20 @@ class Product {
     }
 
     renderProduct() {
+        let links = this.ingredients.map(ingredient => {
+            return `
+                <a href="#" class="product-ingredient" data-id="${ingredient.id}">${ingredient.name}</a><br/>
+            `
+        }).join("")
         return `
             <h3>${this.name}</h3> 
             <br>
-            <button id="create-ingredient" data-id="${this.ingredients}">Add An Ingredient</button>
+            <button id="create-ingredient" data-id="${this.id}">Add An Ingredient</button>
             <hr>
             <p>
-            ${this.ingredients}
+            ${links}
             <p>
             <button id="delete-product" data-id="${this.id}">Remove this Product</button>
             `
     }
 }
-// this.ingredients.forEach(ingredient => {     
-//     const li = document.createElement('li')
-//     li.innerHTML = ingredient.name
-//     main.appendChild(li)
-// }
