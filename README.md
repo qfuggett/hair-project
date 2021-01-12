@@ -6,7 +6,11 @@ Be sure to bundle install after cloning from Github. Move into the project with 
 Run rake db:migrate to set up the database needed for the app.
 
 ## Usage
-Type rails s in the terminal to start the application and run it on a server. Type `open index.html` in the terminal, which will automatically open the web page in your default browser.
+In the terminal, move into the frontend of the project with `cd hair-project-frontend`. Type `open index.html`, which will automatically open the web page in your default browser. 
+
+Move into the backend of the project with `cd ..`, and then `cd hair-project-backend`. Type rails s in the terminal to start the application and run it on a server. 
+
+Go to the opened web page in your browser to use the app. 
 
 ## Contributing
 Bug reports and pull requests are welcome on Github at https://github.com/qfuggett/hair-project.git. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the Contributor Covenant code of conduct.
