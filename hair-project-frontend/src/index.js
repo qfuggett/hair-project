@@ -21,7 +21,7 @@ async function renderProducts() {
         const newProduct = new Product(product)
         main.innerHTML += newProduct.render()
     })
-    clicksToLinks()
+    clicksToProduct()
 }
 
 function displayCreateForm(){
@@ -54,13 +54,13 @@ async function createProduct(e){
 
     let data = await apiService.fetchCreateProduct(product)
     let newProduct = new Product(data)
-    main.innerHTML += newProduct.render()
-    clicksToLinks()
+    main.innerHTML += `"<em>Your New Product: <br/>${newProduct.render()} was created!</em>" `
+    clicksToProduct()
     clearForm()
 }
 
 
-function clicksToLinks(){
+function clicksToProduct(){
     const products = document.querySelectorAll(".product-id")
     products.forEach(product => {
         product.addEventListener('click', displayProduct)
@@ -74,9 +74,11 @@ async function displayProduct(e){
     const data = await apiService.fetchProduct(id)
     const product = new Product(data)
     main.innerHTML = product.renderProduct()
-    document.querySelector(".product-ingredient").addEventListener(`click`, displayIngredient)
-    document.querySelectorAll("p button").addEventListener(`click`, displayCreateIngredientForm)
-    document.getElementById('delete-product').addEventListener(`click`, removeProduct)
+    document.querySelector("#create-ingredient").addEventListener(`click`, displayCreateIngredientForm)
+    document.querySelector("#delete-product").addEventListener(`click`, removeProduct)
+    document.querySelectorAll(".product-ingredient").forEach(ingredient => {
+        ingredient.addEventListener(`click`, displayIngredient)
+    })
 }
 
 async function removeProduct(event){
