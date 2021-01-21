@@ -16,7 +16,7 @@ function bindEventListeners() {
 async function renderProducts() {
     clearForm()
     const products = await apiService.fetchProducts()
-    main.innerHTML = "<h3>Products You've Created:"
+    main.innerHTML = "<h3><span style='font-family:cursive'>Products You've Created:</span></h3>"
     products.map(product => {
         const newProduct = new Product(product)
         main.innerHTML += newProduct.render()
@@ -28,7 +28,7 @@ function displayCreateForm(){
     let formDiv = document.querySelector("#product-form")
     let html = `
         <form>
-            <h3>Create A New Product: </h3>
+            <h3><span style='font-family:cursive'>Create A New Product: </span></h3>
             <label>Name</label>
             <input type="text" id="name">
             <input type="submit">
@@ -93,7 +93,7 @@ async function removeProduct(event){
 async function renderIngredients() {
     clearForm()
     const ingredients = await apiService.fetchIngredients()
-    main.innerHTML = "<h3>All Ingredients In Database:</h3>"
+    main.innerHTML = "<h3><span style='font-family:cursive'>All Ingredients In Database:</span></h3>"
     ingredients.map(ingredient => {
         const newIngredient = new Ingredient(ingredient)
         main.innerHTML += newIngredient.render()

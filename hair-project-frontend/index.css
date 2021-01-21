@@ -1,0 +1,13 @@
+#show-product-form, #products, #ingredients {
+    display: inline;
+    padding: 8px;
+    background-color: #dddddd;
+    font-weight: bold;
+}
+
+#centerwrap { 
+    position: absolute;
+   top: 0px;
+   left: 50%;
+   margin-left: -500px; 
+   } 
