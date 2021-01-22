@@ -9,10 +9,12 @@ class Product {
     render() {
         return `
         <p>
-        <a href="#" class="product-id" data-id="${this.id}">${this.name}</a>
+            <a href="#" class="product-id" data-id="${this.id}">${this.name}</a>  
+            <button class="like">&#x2661 </button>
         </p>
         `
     }
+
 
     renderProduct() {
         let links = this.ingredients.map(ingredient => {

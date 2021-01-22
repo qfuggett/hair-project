@@ -5,9 +5,6 @@
     font-weight: bold;
 }
 
-#centerwrap { 
-    position: absolute;
-   top: 0px;
-   left: 50%;
-   margin-left: -500px; 
-   } 
+em {
+    color:red !important;
+}

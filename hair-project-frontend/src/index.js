@@ -22,7 +22,26 @@ async function renderProducts() {
         main.innerHTML += newProduct.render()
     })
     clicksToProduct()
+
+    let likeButton = document.querySelectorAll(".like") 
+    likeButton.forEach(like => {
+        like.addEventListener('click', clickButton)
+    })
+
+    let clicked = false;
+    function clickButton(e){
+        let button = e.target 
+
+        if (!clicked) {
+            clicked = true;
+            button.innerHTML = `&#x2665`;
+        } else {
+            clicked = false;
+            button.innerHTML = `&#x2661`;
+        }
+    }
 }
+
 
 function displayCreateForm(){
     let formDiv = document.querySelector("#product-form")

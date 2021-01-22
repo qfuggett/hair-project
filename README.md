@@ -8,7 +8,7 @@ Run rake db:migrate to set up the database needed for the app.
 ## Usage
 In the terminal, move into the frontend of the project with `cd hair-project-frontend`. Type `open index.html`, which will automatically open the web page in your default browser. 
 
-Move into the backend of the project with `cd ..`, and then `cd hair-project-backend`. Type rails s in the terminal to start the application and run it on a server. 
+Move into the backend of the project with `cd ..`, and then `cd hair-project-backend`. Type `rails s` in the terminal to start the application and run it on a server. 
 
 Go to the opened web page in your browser to use the app. 
 
